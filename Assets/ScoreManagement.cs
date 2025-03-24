@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManagement : MonoBehaviour
 {
@@ -7,28 +7,39 @@ public class ScoreManagement : MonoBehaviour
     public int player2Score = 0;
     public int maxScore = 5; // Winning score
 
-    public GameObject player1Goal; // Assign Player 1's goal collider in Inspector
-    public GameObject player2Goal; // Assign Player 2's goal collider in Inspector
+    public TextMeshProUGUI scoreText; // TMPro UI Text to display scores
+    public GameObject ball; // Reference to the ball (assign in Inspector)
 
-    public Text scoreText; // UI Text to display scores
+    // Assign these in the Inspector to the goal colliders
+    public GameObject player1Goal;
+    public GameObject player2Goal;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void Start()
     {
-        // Check if the ball hit Player 1's goal (Player 2 scores)
-        if (other == player1Goal)
+        UpdateScoreText();
+    }
+
+    // Called when the ball enters a goal trigger
+    public void OnGoalScored(GameObject goal)
+    {
+        if (goal.tag.Equals("Goal1"))
         {
-            player2Score++;
-            CheckWinCondition();
+            player2Score++; // Player 2 scores when ball enters Player 1's goal
         }
-        // Check if the ball hit Player 2's goal (Player 1 scores)
-        else if (other == player2Goal)
+        else if (goal.tag.Equals("Goal2"))
         {
-            player1Score++;
-            CheckWinCondition();
+            player1Score++; // Player 1 scores when ball enters Player 2's goal
         }
 
-        // Update score display
         UpdateScoreText();
+        CheckWinCondition();
+
+        // Reset ball and paddles
+        if (ball != null)
+        {
+            ball.GetComponent<BallMovement>().ResetBall();
+        }
+        ResetPaddles();
     }
 
     void CheckWinCondition()
@@ -49,7 +60,7 @@ public class ScoreManagement : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = player1Score + " - " + player2Score;
+            scoreText.text = $"{player1Score} - {player2Score}";
         }
     }
 
@@ -58,6 +69,14 @@ public class ScoreManagement : MonoBehaviour
         player1Score = 0;
         player2Score = 0;
         UpdateScoreText();
-        // Optionally: Reset ball and paddles here
+    }
+
+    void ResetPaddles()
+    {
+        GameObject[] paddles = GameObject.FindGameObjectsWithTag("Paddle");
+        foreach (GameObject paddle in paddles)
+        {
+            paddle.transform.position = new Vector3(paddle.transform.position.x, 0, 0);
+        }
     }
 }
