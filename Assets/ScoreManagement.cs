@@ -7,8 +7,8 @@ public class ScoreManagement : MonoBehaviour
     public int player2Score = 0;
     public int maxScore = 5; // Winning score
 
-    public Collider2D player1Goal; // Assign Player 1's goal collider in Inspector
-    public Collider2D player2Goal; // Assign Player 2's goal collider in Inspector
+    public GameObject player1Goal; // Assign Player 1's goal collider in Inspector
+    public GameObject player2Goal; // Assign Player 2's goal collider in Inspector
 
     public Text scoreText; // UI Text to display scores
 
