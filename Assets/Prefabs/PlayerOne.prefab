@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7480997845775454740}
   - component: {fileID: 6595260415238187914}
   - component: {fileID: 7129264098085600660}
-  - component: {fileID: 6890881622086553558}
+  - component: {fileID: 3110909191073190048}
   m_Layer: 0
   m_Name: PlayerOne
   m_TagString: Paddle
@@ -109,7 +109,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6890881622086553558
+--- !u!114 &3110909191073190048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2018042064170167684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8e84e28bf462834297113f8d0608604, type: 3}
+  m_Script: {fileID: 11500000, guid: 254dc28f356914942a4f6f2fd971b3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  boundaryY: 5.25
-  isPlayerOne: 0
+  yLimit: 4.75
+  isPlayer: 1
+  ball: {fileID: 0}
