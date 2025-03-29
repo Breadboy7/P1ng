@@ -73,6 +73,7 @@ public class BallController : MonoBehaviour
             // Just bounce off walls normally
             // Unity's physics will handle this automatically
         }
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     void OnTriggerEnter(Collider other)
