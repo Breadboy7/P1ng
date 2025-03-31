@@ -47,9 +47,11 @@ public class GameManager : MonoBehaviour
         ball.GetComponent<BallController>().ResetBall();
 
         // Reset paddle positions if needed
-        GameObject[] paddles = GameObject.FindGameObjectsWithTag("Paddle");
+        GameObject[] paddles = { GameObject.FindGameObjectWithTag("AIPaddle"), GameObject.FindGameObjectWithTag("PlayerPaddle") };
         foreach (GameObject paddle in paddles)
         {
+            //Reset each paddles scale and position after scoring
+            paddle.transform.localScale = new Vector3(0.25f, 2, 1);
             paddle.GetComponent<PaddleController>().ResetPosition();
         }
 

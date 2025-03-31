@@ -62,7 +62,7 @@ public class BallController : MonoBehaviour
         }
 
         //Check if a paddle is hit
-        if (collision.gameObject.CompareTag("PlayerPaddle") || collision.gameObject.CompareTag("AIPaddle") || collision.gameObject.CompareTag("Player2"))
+        if (collision.gameObject.CompareTag("PlayerPaddle") || collision.gameObject.CompareTag("AIPaddle"))
         {
             // Calculate bounce angle based on where the ball hits the paddle
             float hitFactor = (transform.position.y - collision.transform.position.y) /

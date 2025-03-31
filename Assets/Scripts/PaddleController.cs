@@ -36,7 +36,7 @@ public class PaddleController : MonoBehaviour
             if (Input.GetKey(KeyCode.W)) moveInput = 1f;
             if (Input.GetKey(KeyCode.S)) moveInput = -1f;
         }
-        else if (gameObject.CompareTag("Player2"))
+        else if (gameObject.CompareTag("AIPaddle"))
         {
             // Use Up/Down arrows for AI paddle (or second player)
             if (Input.GetKey(KeyCode.UpArrow)) moveInput = 1f;
