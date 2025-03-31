@@ -1742,6 +1742,7 @@ MonoBehaviour:
   - {fileID: 377857967014905872, guid: 84813f76886e3ae449611ae463460a4e, type: 3}
   - {fileID: 377857967014905872, guid: 5abee86671283fd4ca90c98bcca9b44a, type: 3}
   - {fileID: 377857967014905872, guid: b5417aeceeddb1d48be7ca183250f111, type: 3}
+  - {fileID: 377857967014905872, guid: d359938f22f469e45af06267a33ac014, type: 3}
   spawnInterval: 5
   spawnAreaWidth: 15
   spawnAreaHeight: 11

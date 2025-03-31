@@ -50,8 +50,9 @@ public class GameManager : MonoBehaviour
         GameObject[] paddles = { GameObject.FindGameObjectWithTag("AIPaddle"), GameObject.FindGameObjectWithTag("PlayerPaddle") };
         foreach (GameObject paddle in paddles)
         {
-            //Reset each paddles scale and position after scoring
+            //Reset each paddles scale, speed and position after scoring
             paddle.transform.localScale = new Vector3(0.25f, 2, 1);
+            paddle.GetComponent<PaddleController>().speed = 10f;
             paddle.GetComponent<PaddleController>().ResetPosition();
         }
 

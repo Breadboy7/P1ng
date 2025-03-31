@@ -1,11 +1,12 @@
 using UnityEngine;
-
+using System.Collections;
 public enum PowerUpType
 {
     PaddleSizeIncrease,
     PaddleSpeedBoost,
     BallSpeedDecrease,
-    MultiBall
+    MultiBall,
+    ReverseDirection
 }
 
 public class PowerUp : MonoBehaviour
@@ -59,10 +60,41 @@ public class PowerUp : MonoBehaviour
             case PowerUpType.MultiBall:
                 CreateMultiBall(isPlayer);
                 break;
+            case PowerUpType.ReverseDirection:
+                ReverseDirection();
+                break;
         }
     }
 
-    private System.Collections.IEnumerator PaddleSizeIncrease(GameObject paddle)
+    private void ReverseDirection()
+    {
+        GameObject originalBall = GameObject.FindGameObjectWithTag("Ball");
+        if (originalBall != null)
+        {
+            Rigidbody rb = originalBall.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                // Reverse the X direction
+                Vector3 currentVelocity = rb.linearVelocity;
+                rb.linearVelocity = new Vector3(-currentVelocity.x, currentVelocity.y, currentVelocity.z);
+
+                StartCoroutine(FlashBall(originalBall));
+            }
+        }
+    }
+
+    private IEnumerator FlashBall(GameObject ball)
+    {
+        Renderer ballRenderer = ball.GetComponent<Renderer>();
+        Color originalColor = ballRenderer.material.color;
+
+        // Flash red briefly
+        ballRenderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        ballRenderer.material.color = originalColor;
+    }
+
+    private IEnumerator PaddleSizeIncrease(GameObject paddle)
     {
         Vector3 originalScale = paddle.transform.localScale;
         paddle.transform.localScale = new Vector3(
@@ -74,7 +106,7 @@ public class PowerUp : MonoBehaviour
         paddle.transform.localScale = originalScale;
     }
 
-    private System.Collections.IEnumerator PaddleSpeedBoost(GameObject paddle)
+    private IEnumerator PaddleSpeedBoost(GameObject paddle)
     {
         PaddleController controller = paddle.GetComponent<PaddleController>();
         float originalSpeed = controller.speed;
@@ -84,7 +116,7 @@ public class PowerUp : MonoBehaviour
         controller.speed = originalSpeed;
     }
 
-    private System.Collections.IEnumerator BallSpeedDecrease(bool isPlayer)
+    private IEnumerator BallSpeedDecrease(bool isPlayer)
     {
         // Find all balls in play
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
