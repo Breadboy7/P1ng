@@ -7,9 +7,14 @@ using UnityEditor;
 
 public class MainMenu : MonoBehaviour
 {
-    public void StartGame()
+    public void StartGameAI()
     {
         SceneManager.LoadScene("MatchInstance");
+    }
+
+    public void StartGame2P()
+    {
+        SceneManager.LoadScene("2PMatchInstance");
     }
 
         public void ExitGame()
