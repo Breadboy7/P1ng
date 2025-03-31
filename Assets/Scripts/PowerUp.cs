@@ -65,7 +65,7 @@ public class PowerUp : MonoBehaviour
                 ReverseDirection();
                 break;
             case PowerUpType.BallSpeedIncrease:
-                BallSpeedIncrease(isPlayer);
+                BallSpeedIncrease();
                 break;
         }
     }
@@ -81,21 +81,8 @@ public class PowerUp : MonoBehaviour
                 // Reverse the X direction
                 Vector3 currentVelocity = rb.linearVelocity;
                 rb.linearVelocity = new Vector3(-currentVelocity.x, currentVelocity.y, currentVelocity.z);
-
-                StartCoroutine(FlashBall(originalBall));
             }
         }
-    }
-
-    private IEnumerator FlashBall(GameObject ball)
-    {
-        Renderer ballRenderer = ball.GetComponent<Renderer>();
-        Color originalColor = ballRenderer.material.color;
-
-        // Flash red briefly
-        ballRenderer.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        ballRenderer.material.color = originalColor;
     }
 
     private IEnumerator PaddleSizeIncrease(GameObject paddle)
@@ -132,22 +119,14 @@ public class PowerUp : MonoBehaviour
         }
     }
 
-    private IEnumerator BallSpeedIncrease(bool isPlayer)
+    private void BallSpeedIncrease()
     {
         // Find all balls in play
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         foreach (GameObject ball in balls)
         {
             Rigidbody rb = ball.GetComponent<Rigidbody>();
-            if ((rb.linearVelocity.x > 0 && !isPlayer) || (rb.linearVelocity.x < 0 && isPlayer))
-            {
-                Vector3 originalVelocity = rb.linearVelocity;
-                rb.linearVelocity = originalVelocity.normalized *
-                    Mathf.Max(originalVelocity.magnitude + ballSpeedDecreaseAmount, 3f);
-
-                yield return new WaitForSeconds(duration);
-                rb.linearVelocity = originalVelocity;
-            }
+            rb.linearVelocity = rb.linearVelocity * 2;
         }
     }
 
