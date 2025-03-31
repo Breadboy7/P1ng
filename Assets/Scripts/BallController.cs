@@ -52,7 +52,7 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Paddle"))
+        if (collision.gameObject.CompareTag("PlayerPaddle") || collision.gameObject.CompareTag("AIPaddle"))
         {
             // Calculate bounce angle based on where the ball hits the paddle
             float hitFactor = (transform.position.y - collision.transform.position.y) /
