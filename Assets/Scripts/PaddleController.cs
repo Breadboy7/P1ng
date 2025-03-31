@@ -26,11 +26,11 @@ public class PaddleController : MonoBehaviour
 
             if (ball != null)
             {
-                // Simple AI that follows the closest ball
-                float targetY = Mathf.Clamp(ball.transform.position.y, -yLimit, yLimit);
-                float currentY = transform.position.y;
+                // Add random offset to target position (10% of play area)
+                float randomOffset = Random.Range(-yLimit * 0.1f, yLimit * 0.1f);
+                float targetY = Mathf.Clamp(ball.transform.position.y + randomOffset, -yLimit, yLimit);
 
-                // Move towards ball but not too precisely to make it beatable
+                float currentY = transform.position.y;
                 float newY = Mathf.MoveTowards(currentY, targetY, speed * 0.8f * Time.deltaTime);
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             }
