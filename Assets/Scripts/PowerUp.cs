@@ -22,6 +22,9 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
+            //Get ball audio source and play it
+            other.GetComponent<AudioSource>().Play();
+
             // Spawn collection particles
             if (collectionParticlePrefab != null)
             {
@@ -103,18 +106,8 @@ public class PowerUp : MonoBehaviour
     private void CreateMultiBall(bool isPlayer)
     {
         GameObject originalBall = GameObject.FindGameObjectWithTag("Ball");
-        for (int i = 0; i < 2; i++) // Create 2 extra balls
-        {
-            GameObject newBall = Instantiate(originalBall, originalBall.transform.position, Quaternion.identity);
-            Rigidbody rb = newBall.GetComponent<Rigidbody>();
 
-            // Give the new balls slightly different directions
-            Vector3 direction = new Vector3(
-                isPlayer ? 1 : -1,
-                Random.Range(-0.5f, 0.5f),
-                0).normalized;
+        GameObject newBall = Instantiate(originalBall, originalBall.transform.position, Quaternion.identity);
 
-            rb.linearVelocity = direction * originalBall.GetComponent<Rigidbody>().linearVelocity.magnitude;
-        }
     }
 }
