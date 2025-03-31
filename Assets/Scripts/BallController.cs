@@ -11,6 +11,8 @@ public class BallController : MonoBehaviour
     private float currentSpeed;
     private bool gameStarted = false;
 
+    public GameObject collisionParticlePrefab;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,7 +54,15 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Paddle"))
+        // Spawn particles at collision point
+        if (collisionParticlePrefab != null)
+        {
+            ContactPoint contact = collision.contacts[0];
+            Instantiate(collisionParticlePrefab, contact.point, Quaternion.identity);
+        }
+
+        //Check if a paddle is hit
+        if (collision.gameObject.CompareTag("PlayerPaddle") || collision.gameObject.CompareTag("AIPaddle"))
         {
             // Calculate bounce angle based on where the ball hits the paddle
             float hitFactor = (transform.position.y - collision.transform.position.y) /
@@ -68,11 +78,6 @@ public class BallController : MonoBehaviour
             currentSpeed = Mathf.Min(currentSpeed + speedIncrease, maxSpeed);
             rb.linearVelocity = dir * currentSpeed;
         }
-        else if (collision.gameObject.CompareTag("Wall"))
-        {
-            // Just bounce off walls normally
-            // Unity's physics will handle this automatically
-        }
         gameObject.GetComponent<AudioSource>().Play();
     }
 
@@ -80,7 +85,6 @@ public class BallController : MonoBehaviour
     {
         if (other.CompareTag("Goal"))
         {
-            // Score handling would be here
             ResetBall();
         }
     }

@@ -16,6 +16,9 @@ public class Goal : MonoBehaviour
             {
                 GameManager.Instance.PlayerScores();
             }
+
+            //Play sound effect
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 }

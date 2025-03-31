@@ -28,10 +28,22 @@ public class PaddleController : MonoBehaviour
 
     void PlayerControl()
     {
-        float moveInput = Input.GetAxis("Vertical");
-        Vector3 newPosition = transform.position + Vector3.up * moveInput * speed * Time.deltaTime;
+        float moveInput = 0f;
 
-        // Clamp Y position
+        if (gameObject.CompareTag("PlayerPaddle"))
+        {
+            // Use W/S keys for player paddle
+            if (Input.GetKey(KeyCode.W)) moveInput = 1f;
+            if (Input.GetKey(KeyCode.S)) moveInput = -1f;
+        }
+        else if (gameObject.CompareTag("AIPaddle"))
+        {
+            // Use Up/Down arrows for AI paddle (or second player)
+            if (Input.GetKey(KeyCode.UpArrow)) moveInput = 1f;
+            if (Input.GetKey(KeyCode.DownArrow)) moveInput = -1f;
+        }
+
+        Vector3 newPosition = transform.position + Vector3.up * moveInput * speed * Time.deltaTime;
         newPosition.y = Mathf.Clamp(newPosition.y, -yLimit, yLimit);
         transform.position = newPosition;
     }
