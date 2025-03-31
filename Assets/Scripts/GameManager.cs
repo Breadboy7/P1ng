@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel; // Assign in inspector
     public TextMeshProUGUI winnerText;         // Assign child text element
     public string[] winMessages = new string[2];
+
 
     void Awake()
     {
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
     // Call this from a UI button to restart
     public void RestartGame()
     {
+        gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

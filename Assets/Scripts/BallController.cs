@@ -34,14 +34,14 @@ public class BallController : MonoBehaviour
         LaunchBall();
     }
 
-    void LaunchBall()
+    public void LaunchBall()
     {
         currentSpeed = initialSpeed;
 
         // Random direction but always towards a player
         float randomDirection = Random.Range(0, 2) == 0 ? -1 : 1;
         Vector3 direction = new Vector3(randomDirection, Random.Range(-0.5f, 0.5f), 0).normalized;
-
+        rb = GetComponent<Rigidbody>();
         rb.linearVelocity = direction * currentSpeed;
     }
 
