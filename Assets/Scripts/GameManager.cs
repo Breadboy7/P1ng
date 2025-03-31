@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel; // Assign in inspector
     public TextMeshProUGUI winnerText;         // Assign child text element
     public string[] winMessages = new string[2];
+
 
     void Awake()
     {
