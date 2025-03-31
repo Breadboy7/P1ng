@@ -31,7 +31,7 @@ public class PaddleController : MonoBehaviour
                 float currentY = transform.position.y;
 
                 // Move towards ball but not too precisely to make it beatable
-                float newY = Mathf.MoveTowards(currentY, targetY, speed * Time.deltaTime);
+                float newY = Mathf.MoveTowards(currentY, targetY, speed * 0.8f * Time.deltaTime);
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             }
         }

@@ -1,8 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -107,6 +105,7 @@ public class GameManager : MonoBehaviour
     // Call this from a UI button to restart
     public void RestartGame()
     {
+        gameOverPanel.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
