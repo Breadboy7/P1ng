@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +13,11 @@ public class GameManager : MonoBehaviour
 
     private int playerScore = 0;
     private int aiScore = 0;
+
+    [Header("Game Over UI")]
+    public GameObject gameOverPanel; // Assign in inspector
+    public TextMeshProUGUI winnerText;         // Assign child text element
+    public string[] winMessages = new string[2];
 
     void Awake()
     {
@@ -85,13 +91,21 @@ public class GameManager : MonoBehaviour
 
     void gameOver()
     {
-        string winner;
+        // Determine winner
+        string winner = (playerScore > aiScore) ? winMessages[0] : winMessages[1];
 
-        if (playerScore > aiScore)
-            winner = "Player wins!";
-        else
-            winner = "Computer Wins!";
+        // Update UI
+        gameOverPanel.SetActive(true);
+        winnerText.text = winner;
 
-        Debug.Log(winner);
+        // Freeze game
+        Time.timeScale = 0f;
+    }
+
+    // Call this from a UI button to restart
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

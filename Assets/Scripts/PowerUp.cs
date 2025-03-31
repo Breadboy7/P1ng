@@ -5,6 +5,7 @@ public enum PowerUpType
     PaddleSizeIncrease,
     PaddleSpeedBoost,
     BallSpeedDecrease,
+    BallSpeedIncrease,
     MultiBall,
     ReverseDirection
 }
@@ -55,13 +56,16 @@ public class PowerUp : MonoBehaviour
                 StartCoroutine(PaddleSpeedBoost(paddle));
                 break;
             case PowerUpType.BallSpeedDecrease:
-                StartCoroutine(BallSpeedDecrease(isPlayer));
+                BallSpeedDecrease();
                 break;
             case PowerUpType.MultiBall:
                 CreateMultiBall(isPlayer);
                 break;
             case PowerUpType.ReverseDirection:
                 ReverseDirection();
+                break;
+            case PowerUpType.BallSpeedIncrease:
+                BallSpeedIncrease(isPlayer);
                 break;
         }
     }
@@ -116,7 +120,19 @@ public class PowerUp : MonoBehaviour
         controller.speed = originalSpeed;
     }
 
-    private IEnumerator BallSpeedDecrease(bool isPlayer)
+    private void BallSpeedDecrease()
+    {
+        // Find all balls in play
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        foreach (GameObject ball in balls)
+        {
+            Rigidbody rb = ball.GetComponent<Rigidbody>();
+            rb.linearVelocity = rb.linearVelocity/2;
+            
+        }
+    }
+
+    private IEnumerator BallSpeedIncrease(bool isPlayer)
     {
         // Find all balls in play
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
@@ -127,7 +143,7 @@ public class PowerUp : MonoBehaviour
             {
                 Vector3 originalVelocity = rb.linearVelocity;
                 rb.linearVelocity = originalVelocity.normalized *
-                    Mathf.Max(originalVelocity.magnitude - ballSpeedDecreaseAmount, 3f);
+                    Mathf.Max(originalVelocity.magnitude + ballSpeedDecreaseAmount, 3f);
 
                 yield return new WaitForSeconds(duration);
                 rb.linearVelocity = originalVelocity;
@@ -138,7 +154,9 @@ public class PowerUp : MonoBehaviour
     private void CreateMultiBall(bool isPlayer)
     {
         GameObject originalBall = GameObject.FindGameObjectWithTag("Ball");
+        if (originalBall == null) return;
 
+        // Create new ball
         GameObject newBall = Instantiate(originalBall, originalBall.transform.position, Quaternion.identity);
 
     }
