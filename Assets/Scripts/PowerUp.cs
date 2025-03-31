@@ -136,7 +136,10 @@ public class PowerUp : MonoBehaviour
         if (originalBall == null) return;
 
         // Create new ball
-        GameObject newBall = Instantiate(originalBall, originalBall.transform.position, Quaternion.identity);
-
+        for (int i = 0; i < 1; i++)
+        {
+            GameObject newBall = Instantiate(originalBall, originalBall.transform.position, Quaternion.identity);
+            newBall.GetComponent<BallController>().LaunchBall();
+        }
     }
 }
