@@ -9,10 +9,17 @@ public class PowerUpSpawner : MonoBehaviour
     public float spawnAreaHeight = 4f;
     public int maxPowerUps = 2;
 
-    private void Start()
+    private bool gameStarted = false;
+
+    void Update()
     {
-        StartCoroutine(SpawnPowerUps());
+        if (!gameStarted && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(SpawnPowerUps());
+            gameStarted = true;
+        }
     }
+
 
     //Coroutine to spawn a power up after interval
     private IEnumerator SpawnPowerUps()
@@ -50,5 +57,6 @@ public class PowerUpSpawner : MonoBehaviour
         // Stops all coroutines running on THIS script instance
         StopAllCoroutines();
         StartCoroutine(SpawnPowerUps());
+        gameStarted=false;
     }
 }
