@@ -11,6 +11,8 @@ public class BallController : MonoBehaviour
     private float currentSpeed;
     private bool gameStarted = false;
 
+    public GameObject collisionParticlePrefab;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,6 +54,13 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        // Spawn particles at collision point
+        if (collisionParticlePrefab != null)
+        {
+            ContactPoint contact = collision.contacts[0];
+            Instantiate(collisionParticlePrefab, contact.point, Quaternion.identity);
+        }
+
         if (collision.gameObject.CompareTag("PlayerPaddle") || collision.gameObject.CompareTag("AIPaddle"))
         {
             // Calculate bounce angle based on where the ball hits the paddle

@@ -14,6 +14,7 @@ public class PowerUpSpawner : MonoBehaviour
         StartCoroutine(SpawnPowerUps());
     }
 
+    //Coroutine to spawn a power up after interval
     private IEnumerator SpawnPowerUps()
     {
         while (true)
@@ -27,6 +28,7 @@ public class PowerUpSpawner : MonoBehaviour
         }
     }
 
+    //Spawn a random power-up in a random position
     private void SpawnRandomPowerUp()
     {
         if (powerUpPrefabs.Length == 0) return;
@@ -41,5 +43,12 @@ public class PowerUpSpawner : MonoBehaviour
         GameObject powerUpToSpawn = powerUpPrefabs[Random.Range(0, powerUpPrefabs.Length)];
 
         Instantiate(powerUpToSpawn, spawnPosition, Quaternion.identity);
+    }
+
+    public void resetSpawn()
+    {
+        // Stops all coroutines running on THIS script instance
+        StopAllCoroutines();
+        StartCoroutine(SpawnPowerUps());
     }
 }

@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
 
     void ResetAfterScore()
     {
+        //Destroy multiball powerup instances
+        DestroyObjects("Ball");
+
         ball.GetComponent<BallController>().ResetBall();
 
         // Reset paddle positions if needed
@@ -50,9 +53,32 @@ public class GameManager : MonoBehaviour
             paddle.GetComponent<PaddleController>().ResetPosition();
         }
 
+        //Destroy all powerups
+        DestroyObjects("PowerUp");
+
+        //Reset power up spawner coroutine
+        gameObject.GetComponent<PowerUpSpawner>().resetSpawn();
+
         if (aiScore >= 5 || playerScore >= 5)
             gameOver();
     }
+
+    //Helper method to destory all gameobjects with specified tag
+    void DestroyObjects(string s)
+    {
+        GameObject[] powerups = GameObject.FindGameObjectsWithTag(s);
+        if (s.Equals("Ball"))
+        {
+            if (powerups.Length > 1)
+                for (int i = 1; i < powerups.Length; i++)
+                    Destroy(powerups[i]);
+        }
+        else {
+            foreach (GameObject power in powerups)
+                Destroy(power);
+        }
+    }
+
 
     void gameOver()
     {

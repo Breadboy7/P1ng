@@ -16,10 +16,18 @@ public class PowerUp : MonoBehaviour
     public float speedBoostAmount = 3f;
     public float ballSpeedDecreaseAmount = 3f;
 
+    public GameObject collectionParticlePrefab;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))
         {
+            // Spawn collection particles
+            if (collectionParticlePrefab != null)
+            {
+                Instantiate(collectionParticlePrefab, transform.position, Quaternion.identity);
+            }
+
             // Determine who gets the power-up based on ball direction
             bool isPlayerPowerUp = other.GetComponent<Rigidbody>().linearVelocity.x > 0;
 
